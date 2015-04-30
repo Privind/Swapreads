@@ -1,4 +1,4 @@
-package com.japa.backend;
+package com.japa.backend.beans;
 
 /**
  * The object model for the data we are sending through endpoints

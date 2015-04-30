@@ -1,7 +1,6 @@
-package com.japa.backend;
+package com.japa.backend.endpoints;
 
-import com.google.api.client.auth.oauth.OAuthParameters;
-import com.google.api.client.auth.oauth.OAuthHmacSigner;
+import com.google.api.client.extensions.appengine.http.UrlFetchTransport;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
@@ -11,11 +10,14 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
-import com.google.api.client.extensions.appengine.http.UrlFetchTransport;
+import com.japa.backend.beans.GrResponseBean;
 
+import java.io.StringReader;
 import java.util.logging.Logger;
 
-import javax.inject.Named;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.stream.StreamSource;
 
 /**
  * An endpoint class we are exposing
@@ -60,11 +62,11 @@ public class GRDataAccessEndpoint {
      * @return The <code>DataBean</code> associated with <code>id</code>.
      */
     @ApiMethod(name = "getBookData")
-    public DataBean getBookData() throws Throwable{
+    public GrResponseBean getBookData() throws Throwable{
     //public DataBean getBookData(@Named("id") Long id) throws Throwable{
         // TODO: Implement this function
         logger.info("Calling getBookData method");
-        DataBean dataBean = new DataBean();
+        GrResponseBean response = new GrResponseBean();
 /*
         InputStreamReader converter = new InputStreamReader(System.in);
         BufferedReader in = new BufferedReader(converter);
@@ -106,12 +108,20 @@ public class GRDataAccessEndpoint {
         GenericUrl url = new GenericUrl("https://www.goodreads.com/search.xml?key="+CONSUMER_KEY+"&q=Ender%27s+Game");
         HttpRequest request = httprequestFactory.buildGetRequest(url);
         HttpResponse resp = request.execute();
-        System.out.println("Response Status Code: " + resp.getStatusCode());
-        System.out.println("Response body:" + resp.parseAsString());
+        StringBuffer buffer = new StringBuffer();
 
-        dataBean.setData(resp.parseAsString());
+        if(resp.getStatusCode() == 200){
+            buffer.append(resp.parseAsString());
+            JAXBContext jaxbContext = JAXBContext.newInstance(GrResponseBean.class);
+            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+            response = (GrResponseBean) unmarshaller.unmarshal(new StreamSource( new StringReader( buffer.toString() ) ) );
+        }
 
-        return dataBean;
+        System.out.println("Response body:" + response);
+
+        //dataBean.setData(buffer.toString());
+
+        return response;
     }
 
     /**
@@ -120,10 +130,10 @@ public class GRDataAccessEndpoint {
      * @param dataBean The object to be added.
      * @return The object to be added.
      */
-    @ApiMethod(name = "insertDataBean")
-    public DataBean insertDataBean(DataBean dataBean) {
+    //@ApiMethod(name = "insertDataBean")
+    //public SearchBean insertDataBean(SearchBean dataBean) {
         // TODO: Implement this function
-        logger.info("Calling insertDataBean method");
-        return dataBean;
-    }
+    //    logger.info("Calling insertDataBean method");
+    //    return dataBean;
+    //}
 }

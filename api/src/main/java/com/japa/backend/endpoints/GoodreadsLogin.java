@@ -4,7 +4,7 @@
    https://github.com/GoogleCloudPlatform/gradle-appengine-templates/tree/master/HelloEndpoints
 */
 
-package com.japa.backend;
+package com.japa.backend.endpoints;
 
 import com.google.api.client.auth.oauth.OAuthAuthorizeTemporaryTokenUrl;
 import com.google.api.client.auth.oauth.OAuthCredentialsResponse;
@@ -14,10 +14,7 @@ import com.google.api.client.extensions.appengine.http.UrlFetchTransport;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
-
-import javax.inject.Named;
+import com.japa.backend.beans.AuthBean;
 
 /**
  * An endpoint class we are exposing
