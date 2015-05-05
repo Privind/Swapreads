@@ -8,66 +8,60 @@ import javax.xml.bind.annotation.XmlElement;
 public class SearchBean {
 
     String query;
+    int resultStart;
+    int resultEnd;
+    int total_results;
+    String source;
+    double queryTimeSeconds;
+    ResultsBean results;
+
     @XmlElement( name = "query" )
     public void setQuery( String query ) {
         this.query = query;
     }
-
-    int results_start;
-    @XmlElement( name = "results-start" )
-    public void setResults_Start( int results_start ) {
-        this.results_start = results_start;
-    }
-
-    int results_end;
-    @XmlElement( name = "results-end" )
-    public void setResults_End( int results_end ) {
-        this.results_end = results_end;
-    }
-
-    int total_results;
-    @XmlElement( name = "total-results" )
-    public void setTotal_Results( int total_results ) {
-        this.total_results = total_results;
-    }
-
-    String source;
-    @XmlElement( name = "source" )
-    public void setSource( String source ) {
-        this.source = source;
-    }
-
-    double query_time_seconds;
-    @XmlElement( name = "query-time-seconds" )
-    public void setQuery_Time_Seconds( double query_time_seconds ) {
-        this.query_time_seconds = query_time_seconds;
-    }
-
     public String getQuery() {
         return query;
     }
 
-    public int getResults_start() {
-        return results_start;
+    @XmlElement( name = "results-start" )
+    public void setResultStart( int resultStart ) {
+        this.resultStart = resultStart;
+    }
+    public int getResultStart() {
+        return resultStart;
     }
 
-    public int getResults_end() {
-        return results_end;
+    @XmlElement( name = "results-end" )
+    public void setResultEnd( int resultEnd ) {
+        this.resultEnd = resultEnd;
+    }
+    public int getResultEnd() {
+        return resultEnd;
     }
 
+    @XmlElement( name = "total-results" )
+    public void setTotal_results( int total_results ) {
+        this.total_results = total_results;
+    }
     public int getTotal_results() {
         return total_results;
     }
 
+    @XmlElement( name = "source" )
+    public void setSource( String source ) {
+        this.source = source;
+    }
     public String getSource() {
         return source;
     }
 
-    public double getQuery_time_seconds() {
-        return query_time_seconds;
+    @XmlElement( name = "query-time-seconds" )
+    public void setQueryTimeSeconds( double queryTimeSeconds ) {
+        this.queryTimeSeconds = queryTimeSeconds;
     }
-
-    ResultsBean results;
+    public double getQueryTimeSeconds() {
+        return queryTimeSeconds;
+    }
 
     public ResultsBean getResults() {
         return results;
